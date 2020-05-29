@@ -1,0 +1,13 @@
+The following open source projects are referenced by this project:
+
+google/go-tpm (Apache 2.0) https://github.com/google/go-tpm
+https://github.com/google/go-tpm/blob/master/LICENSE
+
+iotaledger/iota.go (MIT) https://github.com/iotaledger/iota.go
+https://github.com/iotaledger/iota.go/blob/master/LICENSE
+
+project-alvarium/go-sdk (Apache 2.0) https://github.com/project-alvarium/go-sdk
+https://github.com/project-alvarium/go-sdk/blob/master/LICENSE
+
+project-alvarium/go-store (Apache 2.0) https://github.com/project-alvarium/go-store
+https://github.com/project-alvarium/go-store/blob/master/LICENSE
