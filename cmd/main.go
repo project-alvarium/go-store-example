@@ -17,6 +17,7 @@ package main
 import (
 	"crypto"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"os"
@@ -108,14 +109,8 @@ var ValidPublicKey = []byte(publicKey)
 
 const (
 	// IOTA constants
-	iotaURL              = "http://localhost:14265"
-	iotaDepth     uint64 = 3
-	iotaMWM       uint64 = 9
-	trytesCharset        = "ABCDEFGHIJKLMNOPQRSTUVWXYZ9"
-	seedSize             = 81
-
-	// IPFS constants
-	ipfsURL = "localhost:5001"
+	trytesCharset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ9"
+	seedSize      = 81
 )
 
 // factoryRandomSeedString returns an IOTA Tangle seed with a random value.
@@ -181,6 +176,18 @@ func newClient(url string) *api.API {
 
 // main is the example entry point.
 func main() {
+	var iotaURL string
+	var iotaDepth uint64
+	var iotaMWM uint64
+	var ipfsURL string
+	var storeURL string
+	flag.StringVar(&iotaURL, "iotaURL", "http://localhost:14265", "IOTA Tangle URL (http://localhost:14265)")
+	flag.Uint64Var(&iotaDepth, "iotaDepth", 3, "IOTA Tangle Depth (3)")
+	flag.Uint64Var(&iotaMWM, "iotaMWM", 9, "IOTA Tangle Minimum Weight Magnitude (9)")
+	flag.StringVar(&ipfsURL, "ipfsURL", "localhost:5001", "IPFS URL (localhost:5001)")
+	flag.StringVar(&storeURL, "storeURL", "http://localhost:8081", "Annotation Store URL (localhost:8081)")
+	flag.Parse()
+
 	mFactory := metadataFactory.New(
 		[]metadataFactory.Contract{
 			assessMetadataFactory.NewDefault(),
@@ -192,7 +199,7 @@ func main() {
 	hashProvider := sha256.New()
 	uniqueProvider := ulid.New()
 	idProvider := identityProvider.New(hashProvider)
-	persistence := client.New(requestor.New("http://localhost:8081").Handler, mFactory, iFactory)
+	persistence := client.New(requestor.New(storeURL).Handler, mFactory, iFactory)
 	passthroughFilter := passthrough.New()
 
 	// create new TPM keys
