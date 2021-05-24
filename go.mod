@@ -1,4 +1,4 @@
-module github.com/michaelestrin/go-store-example
+module github.com/project-alvarium/go-store-example
 
 go 1.13
 
